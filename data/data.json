@@ -1,0 +1,53 @@
+{
+    "start": {
+        "text": "Tu te réveilles dans une forêt sombre. Deux chemins s'offrent à toi.",
+        "choices": [
+            {
+                "text": "Prendre le chemin de gauche",
+                "next": "left_path"
+            },
+            {
+                "text": "Prendre le chemin de droite",
+                "next": "right_path"
+            }
+        ]
+    },
+    "left_path": {
+        "text": "Le sentier est calme, mais tu entends un grondement au loin.",
+        "choices": [
+            {
+                "text": "Continuer malgré tout",
+                "next": "bear_encounter"
+            },
+            {
+                "text": "Faire demi-tour",
+                "next": "start"
+            }
+        ]
+    },
+    "right_path": {
+        "text": "Tu tombes sur une cabane abandonnée.",
+        "choices": [
+            {
+                "text": "Entrer dans la cabane",
+                "next": "inside_cabin"
+            },
+            {
+                "text": "Continuer ton chemin",
+                "next": "forest_exit"
+            }
+        ]
+    },
+    "bear_encounter": {
+        "text": "Un ours surgit des buissons ! Tu fuis à toutes jambes… Fin de l’aventure 🐻",
+        "choices": []
+    },
+    "inside_cabin": {
+        "text": "Tu trouves un coffre rempli d’or ! Fin de l’aventure 💰",
+        "choices": []
+    },
+    "forest_exit": {
+        "text": "Tu sors de la forêt sain et sauf. Fin de l’aventure 🌲",
+        "choices": []
+    }
+}
