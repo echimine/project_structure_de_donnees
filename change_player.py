@@ -1,3 +1,5 @@
+#crée un fichier xml pour crée un nouveau personnage
+
 def createPlayer(Name):
     import random
     import xml.etree.ElementTree as ET
@@ -5,14 +7,42 @@ def createPlayer(Name):
     chance = random.randint(3,6)
     shinning = random.randint(8,13)
     racine = ET.Element("player")
-    ET.SubElement(racine, "name", id="1").text = Name
-    ET.SubElement(racine, "PV").text = str(vie)
+    ET.SubElement(racine, "name").text = Name
+    ET.SubElement(racine, "PV_max",attrib={"pv": str(vie)}).text = str(vie)
     ET.SubElement(racine, "chance").text = str(chance)
-    ET.SubElement(racine, "shinning").text = str(shinning)
+    ET.SubElement(racine, "shinning_Max", attrib={"shinning": str(shinning)}).text = str(shinning)
     arbre = ET.ElementTree(racine)
     directory = "player/"
     extension = ".xml"
     url = f"{directory}{Name}{extension}"
     arbre.write(url, encoding="utf-8", xml_declaration=True)
 
-createPlayer("echimine")
+
+def startGame():
+    import os
+    print("salut salut , tu viens de lancer notre JDR sur l'univers de Stephen king")
+    print("tu as un compte => 1")
+    print("crée en toi un =>2")
+    choice = input("choix:")
+    match choice:
+        case "1":
+            data = os.listdir("player")
+            if len(data) == 1 :
+                return data[0]
+            else :
+                print("choisi ton compte:")
+                for index,file in enumerate(data):
+                    print(data[index]+"=>"+str(index))
+                file = input("quel est ton compte?:")
+                while 0>int(file) or len(data)<int(file):
+                        print("tu t'es trompé, choisi une valeur mise")
+                        file = input ("choix:")
+                return data[int(file)]         
+        case "2":
+            name = input("choisi ton nom:")
+            createPlayer(name)
+            return name+".xml"
+
+
+
+startGame()

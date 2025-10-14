@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<player>
+    <name id="1">test</name>
+    <PV_max pv="13">13</PV_max>
+    <chance>5</chance>
+    <shinning_Max shinning="10">10</shinning_Max>
+</player>
