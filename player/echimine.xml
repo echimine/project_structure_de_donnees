@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<player>
-    <name id="1">echimine</name>
-    <PV_max pv="15">15</PV_max>
-    <chance>4</chance>
-    <shinning_Max shinning="11">11</shinning_Max>
-</player>
