@@ -1,5 +1,6 @@
 {
     "start": {
+        "id": "commencement",
         "text": "Tu te réveilles dans une forêt sombre. Deux chemins s'offrent à toi.",
         "choices": [
             {
@@ -13,6 +14,7 @@
         ]
     },
     "left_path": {
+        "id": "sentier",
         "text": "Le sentier est calme, mais tu entends un grondement au loin.",
         "choices": [
             {
@@ -26,6 +28,7 @@
         ]
     },
     "right_path": {
+        "id":"cabane",
         "text": "Tu tombes sur une cabane abandonnée.",
         "choices": [
             {
@@ -39,14 +42,17 @@
         ]
     },
     "bear_encounter": {
+        "id":"sentier",
         "text": "Un ours surgit des buissons ! Tu fuis à toutes jambes… Fin de l’aventure 🐻",
         "choices": []
     },
     "inside_cabin": {
+        "id":"cabane",
         "text": "Tu trouves un coffre rempli d’or ! Fin de l’aventure 💰",
         "choices": []
     },
     "forest_exit": {
+        "id":"sentier",
         "text": "Tu sors de la forêt sain et sauf. Fin de l’aventure 🌲",
         "choices": []
     }

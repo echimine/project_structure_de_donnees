@@ -1,25 +1,32 @@
 #crée un fichier xml pour crée un nouveau personnage
 
+import xml.etree.ElementTree as ET
+from xml.dom import minidom
+
+
 def createPlayer(Name):
     import random
-    import xml.etree.ElementTree as ET
     vie = random.randint(9,15)
     chance = random.randint(3,6)
     shinning = random.randint(8,13)
-    racine = ET.Element("player")
-    ET.SubElement(racine, "name").text = Name
-    ET.SubElement(racine, "PV_max",attrib={"pv": str(vie)}).text = str(vie)
-    ET.SubElement(racine, "chance").text = str(chance)
-    ET.SubElement(racine, "shinning_Max", attrib={"shinning": str(shinning)}).text = str(shinning)
-    arbre = ET.ElementTree(racine)
+    player = ET.Element("player")
+    ET.SubElement(player, "name").text = Name
+    ET.SubElement(player, "PV_max",attrib={"pv": str(vie)}).text = str(vie)
+    ET.SubElement(player, "chance").text = str(chance)
+    ET.SubElement(player, "shinning_Max", attrib={"shinning": str(shinning)}).text = str(shinning)
+    ET.SubElement(player,"StoryBoard").text= ""
+    rough_string = ET.tostring(player, 'utf-8')
+    reparsed = minidom.parseString(rough_string)
+    pretty_xml = reparsed.toprettyxml(indent="   ")
     directory = "player/"
     extension = ".xml"
     url = f"{directory}{Name}{extension}"
-    arbre.write(url, encoding="utf-8", xml_declaration=True)
-
+    with open(url, "w", encoding="utf-8") as f:
+        f.write(pretty_xml)
 
 #fonction qui permet de commencer une parti 
 def startGame():
+
     import os
     print("salut salut , tu viens de lancer notre JDR sur l'univers de Stephen king")
 
@@ -54,7 +61,23 @@ def startGame():
         name = input("choisi ton nom: ")
         createPlayer(name)
         return name+".xml"
+    
 
+def historique(player, narration, choix, id, index):
 
+    path = f"player/{player}"
+    tree = ET.parse(path)
+    root = tree.getroot()
 
-startGame()
+    storyboard = root.find('StoryBoard')
+    content = ET.SubElement(storyboard,'content', attrib={'id':str(index), 'chap':id})
+    ET.SubElement(content, "text").text= narration
+    ET.SubElement(content,"choix").text = choix
+
+    rough_string = ET.tostring(root, 'utf-8')
+    reparsed = minidom.parseString(rough_string)
+    pretty_xml = reparsed.toprettyxml(indent="   ")
+
+    # Écrire le XML indenté dans le fichier
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(pretty_xml)
