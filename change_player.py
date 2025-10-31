@@ -17,12 +17,12 @@ def createPlayer(Name):
     ET.SubElement(player,"StoryBoard").text= ""
     rough_string = ET.tostring(player, 'utf-8')
     reparsed = minidom.parseString(rough_string)
-    pretty_xml = reparsed.toprettyxml(indent="   ")
+    reparsed_xml = reparsed.toprettyxml(indent="   ")
     directory = "player/"
     extension = ".xml"
     url = f"{directory}{Name}{extension}"
     with open(url, "w", encoding="utf-8") as f:
-        f.write(pretty_xml)
+        f.write(reparsed_xml)
 
 #fonction qui permet de commencer une parti 
 def startGame():
@@ -76,8 +76,76 @@ def historique(player, narration, choix, id, index):
 
     rough_string = ET.tostring(root, 'utf-8')
     reparsed = minidom.parseString(rough_string)
-    pretty_xml = reparsed.toprettyxml(indent="   ")
+    xml = reparsed.toprettyxml(indent="  ")
+    pretty_xml = "\n".join([line for line in xml.splitlines() if line.strip()])
 
     # Écrire le XML indenté dans le fichier
     with open(path, "w", encoding="utf-8") as f:
         f.write(pretty_xml)
+
+import random
+import time
+import random
+import time
+import random
+import time
+
+def combat(player, monstre):
+    pv_joueur = int(player["pv"])
+    defense_joueur = int(player["defense"])
+    shinning = int(player["shinning"])
+
+    pv_monstre = int(monstre["pv"])
+    defense_monstre = int(monstre["defense"])
+
+    print(f"\n⚔️ Combat engagé entre {player['nom']} et {monstre['nom']} ! ⚔️\n")
+
+    tour = 1
+    while pv_joueur > 0 and pv_monstre > 0:
+        print(f"--- 🌀 Tour {tour} ---")
+        
+        # Choix du joueur : combattre ou fuir
+        choix = input("Que fais-tu ? (1: Combattre, 2: Fuir) : ").strip()
+        if choix == "2":
+            jet_fuite = random.randint(1, 20)
+            print(f"{player['nom']} tente de fuir (jet d20 → {jet_fuite})")
+            if jet_fuite < shinning:
+                print(f"🏃 {player['nom']} réussit à fuir le combat !")
+                return True, pv_joueur  # joueur en vie + PV restants
+            else:
+                print(f"⚠️ {player['nom']} échoue à fuir... Le monstre attaque !")
+                # Le joueur ne lance pas d'attaque si fuite échouée
+
+        else:
+            # Jet d'attaque du joueur
+            jet_joueur = random.randint(1, 20)
+            print(f"{player['nom']} lance un d20 → {jet_joueur}")
+            if jet_joueur > defense_monstre:
+                degats = random.randint(1, 6)
+                pv_monstre -= degats
+                print(f"💥 Attaque réussie ! {monstre['nom']} perd {degats} PV (reste {max(pv_monstre, 0)} PV)")
+            else:
+                print(f"😬 {player['nom']} rate son attaque...")
+
+            if pv_monstre <= 0:
+                print(f"\n🏆 {player['nom']} a vaincu {monstre['nom']} !")
+                return True, pv_joueur  # joueur gagne + PV restants
+
+        # Jet d'attaque du monstre
+        jet_monstre = random.randint(1, 20)
+        print(f"{monstre['nom']} lance un d20 → {jet_monstre}")
+        if jet_monstre > defense_joueur:
+            degats = random.randint(1, 6)
+            pv_joueur -= degats
+            print(f"🩸 {player['nom']} subit {degats} dégâts (reste {max(pv_joueur, 0)} PV)")
+        else:
+            print(f"🛡️ {player['nom']} esquive l’attaque !")
+
+        if pv_joueur <= 0:
+            print(f"\n💀 {player['nom']} a été vaincu par {monstre['nom']}...")
+            return False  # joueur mort, pas de PV à retourner
+
+        tour += 1
+        time.sleep(1)
+
+    return True, pv_joueur  # joueur vivant + PV restants si combat terminé naturellement
