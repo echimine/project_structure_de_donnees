@@ -1,6 +1,8 @@
 {
     "start": {
+        "id": "start",
         "text": "Tu te réveilles dans une forêt sombre. Deux chemins s'offrent à toi.",
+        "combat": false,
         "choices": [
             {
                 "text": "Prendre le chemin de gauche",
@@ -13,7 +15,9 @@
         ]
     },
     "left_path": {
+        "id": "left_path",
         "text": "Le sentier est calme, mais tu entends un grondement au loin.",
+        "combat": false,
         "choices": [
             {
                 "text": "Continuer malgré tout",
@@ -26,7 +30,9 @@
         ]
     },
     "right_path": {
+        "id": "right_path",
         "text": "Tu tombes sur une cabane abandonnée.",
+        "combat": false,
         "choices": [
             {
                 "text": "Entrer dans la cabane",
@@ -39,15 +45,62 @@
         ]
     },
     "bear_encounter": {
-        "text": "Un ours surgit des buissons ! Tu fuis à toutes jambes… Fin de l’aventure 🐻",
+        "id": "bear_encounter",
+        "text": "Un ours surgit des buissons ! Que fais-tu ?",
+        "combat": false,
+        "choices": [
+            {
+                "text": "Combattre l'ours",
+                "next": "bear_fight"
+            },
+            {
+                "text": "Fuir",
+                "next": "start"
+            }
+        ]
+    },
+    "bear_fight": {
+        "id": "bear_fight",
+        "text": "Le combat commence contre l'ours !",
+        "monstre": "ours",
+        "combat": true,
+        "choices": [
+            {
+                "text": "Attaquer",
+                "next": "bear_fight"
+            },
+            {
+                "text": "Fuir",
+                "next": "start"
+            }
+        ],
+        "end": {
+            "win": "bear_victory",
+            "lose":"bear_defeat"
+        }
+    },
+    "bear_victory": {
+        "id": "bear_victory",
+        "text": "Après un combat acharné, tu parviens à maîtriser l'ours. Tu es victorieux ! Fin de l’aventure 🏆",
+        "combat": false,
+        "choices": []
+    },
+    "bear_defeat": {
+        "id": "bear_defeat",
+        "text": "L'ours te terrasse sans pitié... Fin de l’aventure 💀",
+        "combat": false,
         "choices": []
     },
     "inside_cabin": {
+        "id": "inside_cabin",
         "text": "Tu trouves un coffre rempli d’or ! Fin de l’aventure 💰",
+        "combat": false,
         "choices": []
     },
     "forest_exit": {
+        "id": "forest_exit",
         "text": "Tu sors de la forêt sain et sauf. Fin de l’aventure 🌲",
+        "combat": false,
         "choices": []
     }
 }
