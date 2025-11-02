@@ -14,7 +14,7 @@ def createPlayer(Name):
     ET.SubElement(player, "PV_max",attrib={"pv": str(vie)}).text = str(vie)
     ET.SubElement(player, "chance").text = str(chance)
     ET.SubElement(player, "shinning_Max", attrib={"shinning": str(shinning)}).text = str(shinning)
-    ET.SubElement(player,"StoryBoard").text= ""
+    ET.SubElement(player,"StoryBoard")
     rough_string = ET.tostring(player, 'utf-8')
     reparsed = minidom.parseString(rough_string)
     reparsed_xml = reparsed.toprettyxml(indent="   ")

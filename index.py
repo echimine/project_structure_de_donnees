@@ -44,20 +44,31 @@ def play_game(data):
             if combat_result is False:
                 next_scene = scene["end"]["lose"]
                 print(f"\n💀 {player_data['nom']} a été vaincu...")
+
+    # 🔁 Recharge le XML avant écriture
+                tree = ET.parse(f'./player/{player}')
+                root = tree.getroot()
+
                 pv_element = root.find("PV_max")
                 pv_element.set("pv", str(0))
                 pv_element.text = str(0)
+
                 tree.write(f'./player/{player}', encoding="utf-8", xml_declaration=True)
                 return
             else:
                 vivant, pv_restants = combat_result
                 player_data["pv"] = pv_restants
 
-    # Mettre à jour le XML
+    # 🔁 Recharge le XML avant écriture
+                tree = ET.parse(f'./player/{player}')
+                root = tree.getroot()
+
                 pv_element = root.find("PV_max")
                 pv_element.set("pv", str(pv_restants))
                 pv_element.text = str(pv_restants)
+
                 tree.write(f'./player/{player}', encoding="utf-8", xml_declaration=True)
+
 
                 next_scene = scene["end"]["win"]
         if not scene["choices"]:
