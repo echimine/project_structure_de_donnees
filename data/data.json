@@ -1,105 +1,121 @@
 {
     "start": {
         "id": "start",
-        "text": "Tu te réveilles dans une forêt sombre. Deux chemins s'offrent à toi.",
+        "text": "Vous et vos parents partez à l’Overlook Hotel pour les vacances d’été. Tout se passe bien… jusqu’au retour. Sur la route, vous croisez une vieille dame au visage partiellement nécrosé. Que faites-vous ?",
         "combat": false,
         "choices": [
             {
-                "text": "Prendre le chemin de gauche",
-                "next": "left_path"
+                "text": "S'arrêter pour aider la vieille dame",
+                "next": "help_woman"
             },
             {
-                "text": "Prendre le chemin de droite",
-                "next": "right_path"
+                "text": "Ignorer et continuer la route",
+                "next": "ignore_woman"
             }
         ]
     },
-    "left_path": {
-        "id": "left_path",
-        "text": "Le sentier est calme, mais tu entends un grondement au loin.",
+    "help_woman": {
+        "id": "help_woman",
+        "text": "Vos parents, pris entre panique et générosité, décident de l’emmener à l’hôpital. Étrangement, elle semble sereine, et vous entendez sa voix, comme s'ils murmuraient en dormant.",
         "combat": false,
         "choices": [
             {
-                "text": "Continuer malgré tout",
-                "next": "bear_encounter"
+                "text": "Rester avec eux jusqu'à l'hôpital",
+                "next": "hospital_drop"
             },
             {
-                "text": "Faire demi-tour",
-                "next": "start"
+                "text": "Retourner à la voiture et attendre",
+                "next": "hospital_drop"
             }
         ]
     },
-    "right_path": {
-        "id": "right_path",
-        "text": "Tu tombes sur une cabane abandonnée.",
+    "ignore_woman": {
+        "id": "ignore_woman",
+        "text": "Vous choisissez de ne pas intervenir. La route continue, mais une sensation lourde s'installe. Une semaine plus tard, la police vient vous chercher et vous place dans un foyer: vos parents sont restés immobiles dans la voiture depuis leur retour de l'Overlook.",
         "combat": false,
         "choices": [
             {
-                "text": "Entrer dans la cabane",
-                "next": "inside_cabin"
-            },
-            {
-                "text": "Continuer ton chemin",
-                "next": "forest_exit"
+                "text": "Aller au foyer",
+                "next": "foster_home"
             }
         ]
     },
-    "bear_encounter": {
-        "id": "bear_encounter",
-        "text": "Un ours surgit des buissons ! Que fais-tu ?",
+    "hospital_drop": {
+        "id": "hospital_drop",
+        "text": "Après avoir déposé la vieille dame, vos parents rentrent. Ils paraissent fatigués... puis se figent, le regard vide. Une semaine plus tard, les autorités vous placent dans un foyer pour jeunes.",
         "combat": false,
         "choices": [
             {
-                "text": "Combattre l'ours",
-                "next": "bear_fight"
-            },
-            {
-                "text": "Fuir",
-                "next": "start"
+                "text": "Accepter le foyer",
+                "next": "foster_home"
             }
         ]
     },
-    "bear_fight": {
-        "id": "bear_fight",
-        "text": "Le combat commence contre l'ours !",
-        "monstre": "ours",
+    "foster_home": {
+        "id": "foster_home",
+        "text": "Le foyer est bruyant et s’efforce de paraître normal. La nuit, on parle autour de toi d'anciennes légendes. Un soir, lors d'une sortie en groupe, un inconnu frappe l'un de tes accompagnants. Son visage se déchire partiellement : ce n'est pas un humain.",
+        "combat": false,
+        "choices": [
+            {
+                "text": "Courir vers l'inconnu",
+                "next": "attack_scene"
+            },
+            {
+                "text": "Prendre la fuite immédiatement",
+                "next": "flee_scene"
+            }
+        ]
+    },
+    "attack_scene": {
+        "id": "attack_scene",
+        "text": "L'inconnu se met à hurler, et sa peau se déchire comme du vieux cuir. Ceux autour de toi paniquent. Il te reste un choix : fuir... ou tenter de le combattre.",
+        "combat": false,
+        "choices": [
+            {
+                "text": "Fuir à toutes jambes",
+                "next": "flee_scene"
+            },
+            {
+                "text": "Me défendre (se battre)",
+                "next": "entity_fight"
+            }
+        ]
+    },
+    "flee_scene": {
+        "id": "flee_scene",
+        "text": "Tu choisis la fuite. Dans la confusion, tu cours dans la nuit. Après une heure, tu trouves une route déserte et finis par atteindre une station-service ouverte. Tu as échappé au pire... pour l'instant. Fin de l'aventure — fuite réussie.",
+        "combat": false,
+        "choices": []
+    },
+    "entity_fight": {
+        "id": "entity_fight",
+        "text": "Lentement, l'inconnu se redresse. Sa forme n'est plus humaine. Tu dois te battre pour survivre !",
+        "monstre": "entity",
         "combat": true,
         "choices": [
             {
                 "text": "Attaquer",
-                "next": "bear_fight"
+                "next": "entity_fight"
             },
             {
-                "text": "Fuir",
-                "next": "start"
+                "text": "Tenter de fuir",
+                "next": "flee_scene"
             }
         ],
         "end": {
-            "win": "bear_victory",
-            "lose":"bear_defeat"
+            "win": "victory_end",
+            "lose": "defeat_end"
         }
     },
-    "bear_victory": {
-        "id": "bear_victory",
-        "text": "Après un combat acharné, tu parviens à maîtriser l'ours. Tu es victorieux ! Fin de l’aventure 🏆",
+    "victory_end": {
+        "id": "victory_end",
+        "text": "Après un combat atroce, tu parviens à terrasser l'entité. Les autres se réveillent, confus. On te mènera ensuite vers des autorités compétentes; tu survives, mais la vie a changé. Fin de l'aventure — survie.",
         "combat": false,
         "choices": []
     },
-    "bear_defeat": {
-        "id": "bear_defeat",
-        "text": "L'ours te terrasse sans pitié... Fin de l’aventure 💀",
-        "combat": false,
-        "choices": []
-    },
-    "inside_cabin": {
-        "id": "inside_cabin",
-        "text": "Tu trouves un coffre rempli d’or ! Fin de l’aventure 💰",
-        "combat": false,
-        "choices": []
-    },
-    "forest_exit": {
-        "id": "forest_exit",
-        "text": "Tu sors de la forêt sain et sauf. Fin de l’aventure 🌲",
+    "defeat_end": {
+        "id": "defeat_end",
+        "text": "L'entité te terrasse. Ton dernier souvenir est la voix de la vieille dame, douce et lointaine. Fin de l'aventure 💀",
         "combat": false,
         "choices": []
     }

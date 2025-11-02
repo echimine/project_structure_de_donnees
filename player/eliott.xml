@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+<player>
+  <name>eliott</name>
+  <PV_max pv="0">0</PV_max>
+  <chance>5</chance>
+  <shinning_Max shinning="9">9</shinning_Max>
+  <StoryBoard>
+    <content id="5" chap="bear_defeat">
+      <text>Combat contre Ours brun</text>
+      <choix>Défaite - Mort au combat</choix>
+      <combat>
+        <event>Début du combat entre eliott et Ours brun</event>
+        <event>--- 🌀 Tour 1 ---</event>
+        <event>eliott lance un d20 → 14</event>
+        <event>eliott rate son attaque...</event>
+        <event>Ours brun lance un d20 → 12</event>
+        <event>eliott subit 2 dégâts (reste 7 PV)</event>
+        <event>--- 🌀 Tour 2 ---</event>
+        <event>eliott lance un d20 → 16</event>
+        <event>Attaque réussie : Ours brun perd 4 PV (reste 6 PV)</event>
+        <event>Ours brun lance un d20 → 12</event>
+        <event>eliott subit 5 dégâts (reste 2 PV)</event>
+        <event>--- 🌀 Tour 3 ---</event>
+        <event>eliott lance un d20 → 16</event>
+        <event>Attaque réussie : Ours brun perd 1 PV (reste 5 PV)</event>
+        <event>Ours brun lance un d20 → 1</event>
+        <event>eliott esquive l’attaque !</event>
+        <event>--- 🌀 Tour 4 ---</event>
+        <event>eliott lance un d20 → 5</event>
+        <event>eliott rate son attaque...</event>
+        <event>Ours brun lance un d20 → 5</event>
+        <event>eliott esquive l’attaque !</event>
+        <event>--- 🌀 Tour 5 ---</event>
+        <event>eliott lance un d20 → 5</event>
+        <event>eliott rate son attaque...</event>
+        <event>Ours brun lance un d20 → 17</event>
+        <event>eliott subit 2 dégâts (reste 0 PV)</event>
+        <event>eliott a été vaincu par Ours brun...</event>
+      </combat>
+    </content>
+  </StoryBoard>
+</player>
