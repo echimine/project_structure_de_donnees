@@ -5,6 +5,7 @@ import yaml
 
 
 from change_player import *
+from show_history import show_history_markdown
 
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -41,27 +42,45 @@ def play_game(data):
                 monstre_data = yaml.safe_load(f)
 
             combat_result = combat(player_data, monstre_data)
-            if combat_result is False:
+            # Enregistrer le début du combat
+            historique(player, scene["text"], "Engager le combat", scene["id"], index)
+            index += 1
+
+            # combat_result now has the shape (success: bool, pv_remaining_or_None, events:list)
+            success, pv_restants, events = combat_result
+
+            if not success:
                 next_scene = scene["end"]["lose"]
                 print(f"\n💀 {player_data['nom']} a été vaincu...")
+                # Mettre à jour la PV dans le XML avant d'ajouter l'entrée d'historique sur le disque
                 pv_element = root.find("PV_max")
                 pv_element.set("pv", str(0))
                 pv_element.text = str(0)
                 tree.write(f'./player/{player}', encoding="utf-8", xml_declaration=True)
+
+                # Enregistrer la défaite + log du combat (historique lira le fichier et y ajoutera les events)
+                historique(player, f"Combat contre {monstre_data['nom']}", "Défaite - Mort au combat", next_scene, index, events)
+
+                print("\n📖 Voici le résumé de ton aventure :")
+                show_history_markdown(player)
                 return
             else:
-                vivant, pv_restants = combat_result
+                # victoire
                 player_data["pv"] = pv_restants
 
-    # Mettre à jour le XML
+                # Mettre à jour le XML
                 pv_element = root.find("PV_max")
                 pv_element.set("pv", str(pv_restants))
                 pv_element.text = str(pv_restants)
                 tree.write(f'./player/{player}', encoding="utf-8", xml_declaration=True)
 
+                # Enregistrer la victoire + log du combat
                 next_scene = scene["end"]["win"]
+                historique(player, f"Combat contre {monstre_data['nom']}", "Victoire au combat", next_scene, index, events)
+                index += 1
         if not scene["choices"]:
-            print("\n🎮 bien joué")
+            print("\n🎮 Bien joué ! Voici le résumé de ton aventure :")
+            show_history_markdown(player)
             break
 
         for i, choice in enumerate(scene["choices"], 1):

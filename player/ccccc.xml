@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<player>
+  <name>ccccc</name>
+  <PV_max pv="14">14</PV_max>
+  <chance>4</chance>
+  <shinning_Max shinning="9">9</shinning_Max>
+  <StoryBoard>
+    <content id="1" chap="start">
+      <text>Tu te réveilles dans une forêt sombre. Deux chemins s'offrent à toi.</text>
+      <choix>Prendre le chemin de gauche</choix>
+    </content>
+    <content id="2" chap="left_path">
+      <text>Le sentier est calme, mais tu entends un grondement au loin.</text>
+      <choix>Continuer malgré tout</choix>
+    </content>
+    <content id="3" chap="bear_encounter">
+      <text>Un ours surgit des buissons ! Que fais-tu ?</text>
+      <choix>Combattre l'ours</choix>
+    </content>
+    <content id="4" chap="bear_fight">
+      <text>Le combat commence contre l'ours !</text>
+      <choix>Engager le combat</choix>
+    </content>
+  </StoryBoard>
+</player>

@@ -41,7 +41,7 @@ def startGame():
 
                 if len(data) == 1 :
                     return data[0]
-                #si il y en a plusieur faire une liste pour que l'utilisateur puisse choisir
+                #si il y en a plusieurs faire une liste pour que l'utilisateur puisse choisir
                 else :
                     print("choisi ton compte: ")
                     for index,file in enumerate(data):
@@ -52,7 +52,7 @@ def startGame():
                         print("tu t'es trompé, choisi une valeur mise")
                         file = input ("choix: ")
                     return data[int(file)]  
-                #si le joueur n'a pas de parti en cours il peut la crée
+                #si le joueur n'a pas de parti en cours il peut la créer
             case "2":
                 name = input("choisi ton nom: ")
                 createPlayer(name)
@@ -63,16 +63,27 @@ def startGame():
         return name+".xml"
     
 
-def historique(player, narration, choix, id, index):
+def historique(player, narration, choix, id, index, events=None):
+
+    """Ajoute une entrée au StoryBoard du joueur.
+
+    events: optionnel, liste de chaînes représentant les étapes d'un combat ou d'autres logs.
+    """
 
     path = f"player/{player}"
     tree = ET.parse(path)
     root = tree.getroot()
 
     storyboard = root.find('StoryBoard')
-    content = ET.SubElement(storyboard,'content', attrib={'id':str(index), 'chap':id})
-    ET.SubElement(content, "text").text= narration
-    ET.SubElement(content,"choix").text = choix
+    content = ET.SubElement(storyboard, 'content', attrib={'id': str(index), 'chap': id})
+    ET.SubElement(content, "text").text = narration
+    ET.SubElement(content, "choix").text = choix
+
+    # Si des événements (par ex. étapes de combat) sont fournis, les ajouter sous <combat><event>...
+    if events:
+        combat_elem = ET.SubElement(content, 'combat')
+        for ev in events:
+            ET.SubElement(combat_elem, 'event').text = ev
 
     rough_string = ET.tostring(root, 'utf-8')
     reparsed = minidom.parseString(rough_string)
@@ -98,54 +109,82 @@ def combat(player, monstre):
     pv_monstre = int(monstre["pv"])
     defense_monstre = int(monstre["defense"])
 
+    events = []
+    events.append(f"Début du combat entre {player['nom']} et {monstre['nom']}")
     print(f"\n⚔️ Combat engagé entre {player['nom']} et {monstre['nom']} ! ⚔️\n")
 
     tour = 1
     while pv_joueur > 0 and pv_monstre > 0:
-        print(f"--- 🌀 Tour {tour} ---")
-        
+        header = f"--- 🌀 Tour {tour} ---"
+        print(header)
+        events.append(header)
+
         # Choix du joueur : combattre ou fuir
         choix = input("Que fais-tu ? (1: Combattre, 2: Fuir) : ").strip()
         if choix == "2":
             jet_fuite = random.randint(1, 20)
-            print(f"{player['nom']} tente de fuir (jet d20 → {jet_fuite})")
+            msg = f"{player['nom']} tente de fuir (jet d20 → {jet_fuite})"
+            print(msg)
+            events.append(msg)
             if jet_fuite < shinning:
-                print(f"🏃 {player['nom']} réussit à fuir le combat !")
-                return True, pv_joueur  # joueur en vie + PV restants
+                succ = f"{player['nom']} réussit à fuir le combat !"
+                print(f"🏃 {succ}")
+                events.append(succ)
+                return True, pv_joueur, events  # joueur en vie + PV restants
             else:
-                print(f"⚠️ {player['nom']} échoue à fuir... Le monstre attaque !")
+                fail_msg = f"{player['nom']} échoue à fuir... Le monstre attaque !"
+                print(f"⚠️ {fail_msg}")
+                events.append(fail_msg)
                 # Le joueur ne lance pas d'attaque si fuite échouée
 
         else:
             # Jet d'attaque du joueur
             jet_joueur = random.randint(1, 20)
-            print(f"{player['nom']} lance un d20 → {jet_joueur}")
+            msg = f"{player['nom']} lance un d20 → {jet_joueur}"
+            print(msg)
+            events.append(msg)
             if jet_joueur > defense_monstre:
                 degats = random.randint(1, 6)
                 pv_monstre -= degats
-                print(f"💥 Attaque réussie ! {monstre['nom']} perd {degats} PV (reste {max(pv_monstre, 0)} PV)")
+                hit_msg = f"Attaque réussie : {monstre['nom']} perd {degats} PV (reste {max(pv_monstre, 0)} PV)"
+                print(f"💥 {hit_msg}")
+                events.append(hit_msg)
             else:
-                print(f"😬 {player['nom']} rate son attaque...")
+                miss_msg = f"{player['nom']} rate son attaque..."
+                print(f"😬 {miss_msg}")
+                events.append(miss_msg)
 
             if pv_monstre <= 0:
-                print(f"\n🏆 {player['nom']} a vaincu {monstre['nom']} !")
-                return True, pv_joueur  # joueur gagne + PV restants
+                win_msg = f"{player['nom']} a vaincu {monstre['nom']} !"
+                print(f"\n🏆 {win_msg}")
+                events.append(win_msg)
+                return True, pv_joueur, events  # joueur gagne + PV restants
 
         # Jet d'attaque du monstre
         jet_monstre = random.randint(1, 20)
-        print(f"{monstre['nom']} lance un d20 → {jet_monstre}")
+        msg_mon = f"{monstre['nom']} lance un d20 → {jet_monstre}"
+        print(msg_mon)
+        events.append(msg_mon)
         if jet_monstre > defense_joueur:
             degats = random.randint(1, 6)
             pv_joueur -= degats
-            print(f"🩸 {player['nom']} subit {degats} dégâts (reste {max(pv_joueur, 0)} PV)")
+            dmg_msg = f"{player['nom']} subit {degats} dégâts (reste {max(pv_joueur, 0)} PV)"
+            print(f"🩸 {dmg_msg}")
+            events.append(dmg_msg)
         else:
-            print(f"🛡️ {player['nom']} esquive l’attaque !")
+            evade_msg = f"{player['nom']} esquive l’attaque !"
+            print(f"🛡️ {evade_msg}")
+            events.append(evade_msg)
 
         if pv_joueur <= 0:
-            print(f"\n💀 {player['nom']} a été vaincu par {monstre['nom']}...")
-            return False  # joueur mort, pas de PV à retourner
+            dead_msg = f"{player['nom']} a été vaincu par {monstre['nom']}..."
+            print(f"\n💀 {dead_msg}")
+            events.append(dead_msg)
+            return False, None, events  # joueur mort, pas de PV à retourner
 
         tour += 1
         time.sleep(1)
 
-    return True, pv_joueur  # joueur vivant + PV restants si combat terminé naturellement
+    # Si on sort de la boucle naturellement
+    events.append(f"Fin du combat — {player['nom']} vivant")
+    return True, pv_joueur, events  # joueur vivant + PV restants si combat terminé naturellement

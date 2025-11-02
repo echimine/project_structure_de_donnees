@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<player>
+  <name>test</name>
+  <PV_max pv="14">14</PV_max>
+  <chance>6</chance>
+  <shinning_Max shinning="12">12</shinning_Max>
+  <StoryBoard>
+    <content id="1" chap="start">
+      <text>Tu te réveilles dans une forêt sombre. Deux chemins s'offrent à toi.</text>
+      <choix>Prendre le chemin de gauche</choix>
+    </content>
+    <content id="2" chap="left_path">
+      <text>Le sentier est calme, mais tu entends un grondement au loin.</text>
+      <choix>Faire demi-tour</choix>
+    </content>
+    <content id="3" chap="start">
+      <text>Tu te réveilles dans une forêt sombre. Deux chemins s'offrent à toi.</text>
+      <choix>Prendre le chemin de droite</choix>
+    </content>
+    <content id="4" chap="right_path">
+      <text>Tu tombes sur une cabane abandonnée.</text>
+      <choix>Continuer ton chemin</choix>
+    </content>
+  </StoryBoard>
+</player>
