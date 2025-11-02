@@ -1,6 +1,7 @@
 {
     "start": {
         "id": "start",
+<<<<<<< HEAD
         "text": "Vous et vos parents partez à l’Overlook Hotel pour les vacances d’été. Tout se passe bien… jusqu’au retour. Sur la route, vous croisez une vieille dame au visage partiellement nécrosé. Que faites-vous ?",
         "combat": false,
         "choices": [
@@ -116,6 +117,155 @@
     "defeat_end": {
         "id": "defeat_end",
         "text": "L'entité te terrasse. Ton dernier souvenir est la voix de la vieille dame, douce et lointaine. Fin de l'aventure 💀",
+=======
+        "text": "L’assistant social vous parle calmement dans la voiture. Il tourne la tête vers vous pour dire quelque chose… et soudain, un poing transperce la vitre. Son visage se déchire. La chair tombe, révélant un vide noir. Vous restez figé un instant, incapable de crier.",
+        "combat": false,
+        "choices": [
+            {
+                "text": "Sortir de la voiture et courir",
+                "next": "forest_entry"
+            },
+            {
+                "text": "Essayer d’aider l’assistant social",
+                "next": "faceless_attack"
+            }
+        ]
+    },
+    "faceless_attack": {
+        "id": "faceless_attack",
+        "text": "La créature sans visage se tourne vers vous. Son corps se tord comme un pantin désarticulé. L’air devient glacial. Vous sentez une présence ancienne… comme si quelqu’un riait au fond de votre esprit.",
+        "monstre": "faceless",
+        "combat": true,
+        "choices": [
+            {
+                "text": "Fuir par la fenêtre arrière",
+                "next": "forest_entry"
+            }
+        ],
+        "end": {
+            "win": "faceless_win",
+            "lose": "faceless_death"
+        }
+    },
+    "faceless_win": {
+        "id": "faceless_win",
+        "text": "La chose s’effondre dans un râle humide. Vous fuyez à travers la route jusqu’à une forêt dense, le cœur battant.",
+        "combat": false,
+        "choices": [
+            {
+                "text": "Entrer dans la forêt",
+                "next": "forest_entry"
+            }
+        ]
+    },
+    "faceless_death": {
+        "id": "faceless_death",
+        "text": "Une main glacée saisit votre visage. Votre peau brûle. Vous sentez votre propre chair se détacher… puis plus rien. Fin de l’aventure 💀",
+        "combat": false,
+        "choices": []
+    },
+    "forest_entry": {
+        "id": "forest_entry",
+        "text": "Vous courez dans la forêt. L’air sent la terre humide et… la mort. Au loin, vous apercevez une maison isolée. Une pancarte à moitié effacée dit : « Cimetière des animaux ».",
+        "combat": false,
+        "choices": [
+            {
+                "text": "Entrer dans le cimetière",
+                "next": "pet_sematary"
+            },
+            {
+                "text": "Ignorer la maison et suivre le chemin",
+                "next": "roadside_encounter"
+            }
+        ]
+    },
+    "pet_sematary": {
+        "id": "pet_sematary",
+        "text": "Le sol est couvert de croix tordues. Vous entendez un grognement derrière une tombe fraîchement retournée… un chien, mort depuis longtemps, se lève, ses yeux pleins de rage.",
+        "monstre": "cujo",
+        "combat": true,
+        "choices": [],
+        "end": {
+            "win": "sematary_exit",
+            "lose": "sematary_death"
+        }
+    },
+    "sematary_exit": {
+        "id": "sematary_exit",
+        "text": "Le chien retombe, inerte. Vous remarquez une route en contrebas. Un panneau indique : 'Bienvenue à Derry'.",
+        "combat": false,
+        "choices": [
+            {
+                "text": "Prendre la route vers Derry",
+                "next": "derry_street"
+            }
+        ]
+    },
+    "sematary_death": {
+        "id": "sematary_death",
+        "text": "Le chien ressuscité vous attrape la jambe. Ses crocs se plantent dans votre chair. Vous n’avez pas le temps de crier. Fin de l’aventure 💀",
+        "combat": false,
+        "choices": []
+    },
+    "roadside_encounter": {
+        "id": "roadside_encounter",
+        "text": "Vous suivez la route, la nuit tombante. Une voiture s’arrête à votre hauteur. À l’intérieur, un homme à la barbe rousse et au regard vide vous fait signe d’entrer. Sur le tableau de bord, un insigne indique : 'Château des Terres Perdues'.",
+        "combat": false,
+        "choices": [
+            {
+                "text": "Monter dans la voiture",
+                "next": "dark_tower"
+            },
+            {
+                "text": "Refuser et continuer à pied",
+                "next": "derry_street"
+            }
+        ]
+    },
+    "dark_tower": {
+        "id": "dark_tower",
+        "text": "L’homme vous conduit à travers des routes inexistantes. Le paysage se déchire, révélant un désert rouge sous un ciel noir. Devant vous, une immense tour s’élève : La Tour Sombre.",
+        "monstre": "low_men",
+        "combat": true,
+        "choices": [],
+        "end": {
+            "win": "tower_vision",
+            "lose": "tower_death"
+        }
+    },
+    "tower_vision": {
+        "id": "tower_vision",
+        "text": "En touchant la Tour, vous voyez tous les mondes reliés : l’Overlook, Derry, Ludlow… tout n’est qu’un cercle. Vous sentez une voix murmurer : « Tous les mondes tournent autour de la Tour. Même le tien. »",
+        "combat": false,
+        "choices": []
+    },
+    "tower_death": {
+        "id": "tower_death",
+        "text": "Les Low Men vous entourent. L’un d’eux s’approche et murmure : « L’enfant n’aurait jamais dû revenir. » Fin de l’aventure 💀",
+        "combat": false,
+        "choices": []
+    },
+    "derry_street": {
+        "id": "derry_street",
+        "text": "Vous entrez dans la ville déserte. Des ballons rouges flottent dans les égouts. Une voix ricanante résonne : « Tu veux un ballon ? »",
+        "monstre": "pennywise",
+        "combat": true,
+        "choices": [],
+        "end": {
+            "win": "final_escape",
+            "lose": "final_death"
+        }
+    },
+    "final_escape": {
+        "id": "final_escape",
+        "text": "Vous transpercez la créature du clown. Il s’effondre en riant. Le monde se déforme autour de vous. Vous rouvrez les yeux… devant l’Overlook. Tout recommence. 🔁",
+        "combat": false,
+        "choices": []
+    },
+    "final_death": {
+        "id": "final_death",
+        "text": "Les rires deviennent hurlements. Les ballons éclatent, remplissant l’air de sang. Vous sentez la peur consumer votre âme. Fin de l’aventure 💀",
+>>>>>>> clement
         "combat": false,
         "choices": []
     }

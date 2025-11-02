@@ -52,10 +52,19 @@ def play_game(data):
             if not success:
                 next_scene = scene["end"]["lose"]
                 print(f"\n💀 {player_data['nom']} a été vaincu...")
+<<<<<<< HEAD
                 # Mettre à jour la PV dans le XML avant d'ajouter l'entrée d'historique sur le disque
+=======
+
+    # 🔁 Recharge le XML avant écriture
+                tree = ET.parse(f'./player/{player}')
+                root = tree.getroot()
+
+>>>>>>> clement
                 pv_element = root.find("PV_max")
                 pv_element.set("pv", str(0))
                 pv_element.text = str(0)
+
                 tree.write(f'./player/{player}', encoding="utf-8", xml_declaration=True)
 
                 # Enregistrer la défaite + log du combat (historique lira le fichier et y ajoutera les events)
@@ -68,13 +77,25 @@ def play_game(data):
                 # victoire
                 player_data["pv"] = pv_restants
 
+<<<<<<< HEAD
                 # Mettre à jour le XML
+=======
+    # 🔁 Recharge le XML avant écriture
+                tree = ET.parse(f'./player/{player}')
+                root = tree.getroot()
+
+>>>>>>> clement
                 pv_element = root.find("PV_max")
                 pv_element.set("pv", str(pv_restants))
                 pv_element.text = str(pv_restants)
+
                 tree.write(f'./player/{player}', encoding="utf-8", xml_declaration=True)
 
+<<<<<<< HEAD
                 # Enregistrer la victoire + log du combat
+=======
+
+>>>>>>> clement
                 next_scene = scene["end"]["win"]
                 historique(player, f"Combat contre {monstre_data['nom']}", "Victoire au combat", next_scene, index, events)
                 index += 1
