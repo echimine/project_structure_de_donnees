@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<player>
-   <name>eliott</name>
-   <PV_max pv="0">0</PV_max>
-   <chance>3</chance>
-   <shinning_Max shinning="8">8</shinning_Max>
-   <StoryBoard />
-</player>
